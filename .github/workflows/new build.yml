@@ -61,20 +61,17 @@ jobs:
           #tar -zcvf EasyTier-${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/ packages_ci
           zip -j EasyTier-${{ matrix.arch }}-${{ matrix.sdk }}.zip bin/packages/${{ matrix.arch }}/packages_ci/*
 
+      # 说明：
+      # - openwrt-22.03 是 ipk 包
+      # - SNAPSHOT 是 apk 包，安装命令示例：
+      #   apk add --allow-untrusted luci-app-easytier.apk
+
       - name: Release
         if: ${{ github.event.inputs.tag != '' }}
         uses: softprops/action-gh-release@v2
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
-            body: |
-
-             - 其中 **`openwrt-22.03`** 里面是ipk安装包 **`SNAPSHOT`** 里面是apk安装包
-
-             - **`*.apk` 是OpenWrt新版的APK包** 对于apk包跳过证书命令
-             `apk add --allow-untrusted luci-app-easytier.apk`
-
-             ${{ github.event.inputs.text }}
-           
+            body: ${{ github.event.inputs.text }} # 🔧 修改：仅保留用户输入文本
             tag_name: ${{ env.TAG }}
             files: EasyTier-${{ matrix.arch }}-${{ matrix.sdk }}.zip
  
