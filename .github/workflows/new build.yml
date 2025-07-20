@@ -1,4 +1,4 @@
-name: Build-OpenWrt-EasyTier
+name: New-Build-OpenWrt-EasyTier
 
 on:
   push:
